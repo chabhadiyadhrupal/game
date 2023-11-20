@@ -1,0 +1,34 @@
+using UnityEngine;
+
+public class ObstacleController : MonoBehaviour
+{
+    private bool isKinetic = true;
+    private float powerDuration = 5f;
+
+    void Update()
+    {
+        if (isKinetic)
+        {
+            // Implement your kinetic behavior logic here
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            CollectPower();
+        }
+    }
+
+    void CollectPower()
+    {
+        isKinetic = false;
+        Invoke("ResetKinetic", powerDuration);
+    }
+
+    void ResetKinetic()
+    {
+        isKinetic = true;
+    }
+}
