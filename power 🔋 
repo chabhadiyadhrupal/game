@@ -1,0 +1,58 @@
+using UnityEngine;
+
+public class PlayerController : MonoBehaviour
+{
+    public float forceMagnitude = 10f;
+    public float powerDuration = 5f;
+
+    private Rigidbody rb;
+    private bool isPowerActive = false;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
+    void Update()
+    {
+        // Move the player forward continuously
+        rb.AddForce(transform.forward * forceMagnitude);
+
+        // Check for user input to activate power (e.g., you can use a key press)
+        if (Input.GetKeyDown(KeyCode.Space) && !isPowerActive)
+        {
+            StartCoroutine(DisableObstaclesKinetic());
+        }
+    }
+
+    IEnumerator DisableObstaclesKinetic()
+    {
+        isPowerActive = true;
+
+        // Disable kinetic property for obstacles
+        GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+        foreach (GameObject obstacle in obstacles)
+        {
+            Rigidbody obstacleRb = obstacle.GetComponent<Rigidbody>();
+            if (obstacleRb != null)
+            {
+                obstacleRb.isKinematic = false;
+            }
+        }
+
+        // Wait for the power duration
+        yield return new WaitForSeconds(powerDuration);
+
+        // Re-enable kinetic property for obstacles after power duration
+        foreach (GameObject obstacle in obstacles)
+        {
+            Rigidbody obstacleRb = obstacle.GetComponent<Rigidbody>();
+            if (obstacleRb != null)
+            {
+                obstacleRb.isKinematic = true;
+            }
+        }
+
+        isPowerActive = false;
+    }
+}
