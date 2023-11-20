@@ -1,0 +1,28 @@
+using UnityEngine;
+
+public class PowerUp : MonoBehaviour
+{
+    private bool isPlayerTouching = false;
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isPlayerTouching = true;
+            StartCoroutine(DisableObstacles());
+        }
+    }
+
+    private IEnumerator DisableObstacles()
+    {
+        // Disable obstacles for 5 seconds
+        ObstaclesManager.Instance.DisableObstacles();
+
+        yield return new WaitForSeconds(5f);
+
+        // Enable obstacles again
+        ObstaclesManager.Instance.EnableObstacles();
+
+        isPlayerTouching = false;
+    }
+}
