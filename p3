@@ -1,0 +1,40 @@
+using UnityEngine;
+
+public class PlayerController : MonoBehaviour
+{
+    private bool isImmune = false;
+    private float immuneDuration = 5f;
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Obstacle"))
+        {
+            if (!isImmune)
+            {
+                // Implement game over logic here
+                GameOver();
+            }
+        }
+        else if (other.CompareTag("Power"))
+        {
+            CollectPower();
+        }
+    }
+
+    void CollectPower()
+    {
+        isImmune = true;
+        Invoke("EndImmunity", immuneDuration);
+    }
+
+    void EndImmunity()
+    {
+        isImmune = false;
+    }
+
+    void GameOver()
+    {
+        // Implement your game over logic here
+        Debug.Log("Game Over");
+    }
+}
