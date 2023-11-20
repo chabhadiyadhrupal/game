@@ -1,0 +1,48 @@
+using UnityEngine;
+
+public class PlayerController : MonoBehaviour
+{
+    private float timer = 0f;
+    private bool obstacleContact = false;
+
+    void Update()
+    {
+        if (obstacleContact)
+        {
+            timer += Time.deltaTime;
+
+            // Check if the timer reaches 5 seconds
+            if (timer >= 5f)
+            {
+                // Assuming the obstacle has a Rigidbody component and kinematic property
+                Rigidbody obstacleRigidbody = obstacleContact.GetComponent<Rigidbody>();
+
+                // Check if the obstacle is not kinematic
+                if (obstacleRigidbody != null && !obstacleRigidbody.isKinematic)
+                {
+                    // Destroy the player game object
+                    Destroy(gameObject);
+                }
+            }
+        }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        // Check if the collision is with the obstacle
+        if (collision.gameObject.tag == "Obstacle")
+        {
+            obstacleContact = true;
+        }
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        // Reset the timer and obstacle contact status when leaving the obstacle
+        if (collision.gameObject.tag == "Obstacle")
+        {
+            obstacleContact = false;
+            timer = 0f;
+        }
+    }
+}
