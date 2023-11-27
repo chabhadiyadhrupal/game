@@ -1,0 +1,44 @@
+using System;
+
+public class Calculator
+{
+    public int Add(int num1, int num2)
+    {
+        return num1 + num2;
+    }
+
+    public float Add(float num1, float num2)
+    {
+        return num1 + num2;
+    }
+
+    public int Subtract(int num1, int num2)
+    {
+        return num1 - num2;
+    }
+
+    public float Subtract(float num1, float num2)
+    {
+        return num1 - num2;
+    }
+}
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Calculator calculator = new Calculator();
+
+        int result1 = calculator.Add(5, 3);
+        Console.WriteLine("Addition of two integers: " + result1);
+
+        float result2 = calculator.Add(2.5f, 3.7f);
+        Console.WriteLine("Addition of two floats: " + result2);
+
+        int result3 = calculator.Subtract(10, 4);
+        Console.WriteLine("Subtraction of two integers: " + result3);
+
+        float result4 = calculator.Subtract(7.8f, 2.3f);
+        Console.WriteLine("Subtraction of two floats: " + result4);
+    }
+}
