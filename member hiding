@@ -1,0 +1,27 @@
+public class GameObject
+{
+    private bool isActive;
+
+    public bool IsActive
+    {
+        get { return isActive; }
+        set { isActive = value; }
+    }
+}
+
+public class Transform : GameObject
+{
+    private Vector3 position;
+
+    public new bool IsActive
+    {
+        get { return base.IsActive; }
+        set { base.IsActive = value; }
+    }
+
+    public Vector3 Position
+    {
+        get { return position; }
+        set { position = value; }
+    }
+}
