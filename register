@@ -1,0 +1,43 @@
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class GameManager : MonoBehaviour
+{
+    public InputField usernameInput;
+    public InputField passwordInput;
+
+    private List<User> userList = new List<User>();
+
+    public void Register()
+    {
+        User newUser = new User
+        {
+            username = usernameInput.text,
+            password = passwordInput.text
+        };
+
+        userList.Add(newUser);
+
+        // Additional logic for saving data, such as PlayerPrefs or a database, can be added here.
+
+        Debug.Log("Registration successful!");
+    }
+
+    public void Login()
+    {
+        string username = usernameInput.text;
+        string password = passwordInput.text;
+
+        User user = userList.Find(u => u.username == username && u.password == password);
+
+        if (user != null)
+        {
+            Debug.Log("Login successful!");
+        }
+        else
+        {
+            Debug.Log("Login failed. Check your credentials.");
+        }
+    }
+}
