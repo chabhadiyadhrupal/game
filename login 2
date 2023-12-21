@@ -1,0 +1,63 @@
+[System.Serializable]
+public class User
+{
+    public string name;
+    public string address;
+    public string email;
+    public string password;
+}
+
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class RegistrationManager : MonoBehaviour
+{
+    public List<User> userList = new List<User>();
+
+    public InputField nameInput;
+    public InputField addressInput;
+    public InputField emailInput;
+    public InputField passwordInput;
+
+    public InputField loginNameInput;
+    public InputField loginPasswordInput;
+
+    public void RegisterUser()
+    {
+        User newUser = new User
+        {
+            name = nameInput.text,
+            address = addressInput.text,
+            email = emailInput.text,
+            password = passwordInput.text
+        };
+
+        userList.Add(newUser);
+
+        // Optional: Save userList to a file or database for persistence.
+
+        Debug.Log("Registration successful!");
+        Debug.Log("User count: " + userList.Count);
+    }
+
+    public void LoginUser()
+    {
+        string loginName = loginNameInput.text;
+        string loginPassword = loginPasswordInput.text;
+
+        // Check if there's a user with the given name and password
+        User loginUser = userList.Find(user => user.name == loginName && user.password == loginPassword);
+
+        if (loginUser != null)
+        {
+            // Login successful
+            Debug.Log("Login successful!");
+        }
+        else
+        {
+            // Login failed
+            Debug.Log("Login failed. Check your credentials.");
+        }
+    }
+}
