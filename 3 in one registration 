@@ -1,0 +1,94 @@
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+// User class to represent a user
+public class User
+{
+    public string Username { get; set; }
+    public string Email { get; set; }
+    public string Password { get; set; }
+}
+
+// Registration class for handling user registration
+public class Registration : MonoBehaviour
+{
+    public InputField regUsernameInput;
+    public InputField regEmailInput;
+    public InputField regPasswordInput;
+
+    // List to store registered users
+    private List<User> registeredUsers = new List<User>();
+
+    public void RegisterUser()
+    {
+        string username = regUsernameInput.text;
+        string email = regEmailInput.text;
+        string password = regPasswordInput.text;
+
+        // Check if the username is unique before registering
+        if (IsUsernameUnique(username))
+        {
+            User newUser = new User { Username = username, Email = email, Password = password };
+            registeredUsers.Add(newUser);
+
+            // Additional logic for storing user data securely (e.g., PlayerPrefs or database)
+        }
+        else
+        {
+            Debug.LogWarning("Username already exists. Please choose another.");
+        }
+    }
+
+    private bool IsUsernameUnique(string username)
+    {
+        return registeredUsers.Find(user => user.Username == username) == null;
+    }
+}
+
+// Login class for handling user login
+public class Login : MonoBehaviour
+{
+    public InputField loginUsernameInput;
+    public InputField loginPasswordInput;
+
+    private List<User> registeredUsers; // Reference to the list of registered users
+
+    public void SetRegisteredUsers(List<User> users)
+    {
+        registeredUsers = users;
+    }
+
+    public void LoginUser()
+    {
+        string username = loginUsernameInput.text;
+        string password = loginPasswordInput.text;
+
+        User user = registeredUsers.Find(u => u.Username == username && u.Password == password);
+
+        if (user != null)
+        {
+            Debug.Log("Login successful!");
+            // Additional logic for handling a successful login
+        }
+        else
+        {
+            Debug.LogWarning("Invalid username or password. Please try again.");
+        }
+    }
+}
+
+// UserPage class for handling user-specific functionality
+public class UserPage : MonoBehaviour
+{
+    public Text userPageUsernameText;
+    public Text userPageEmailText;
+
+    public void DisplayUserInfo(User user)
+    {
+        userPageUsernameText.text = $"Username: {user.Username}";
+        userPageEmailText.text = $"Email: {user.Email}";
+    }
+
+    // Additional functionality for the user page
+}
