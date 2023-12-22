@@ -1,0 +1,22 @@
+private void Start()
+{
+    // Initialize user list if needed
+    // For example, you can add some default users for testing purposes
+    InitializeDefaultUsers();
+}
+
+private void InitializeDefaultUsers()
+{
+    // Example: Creating and adding some default users to the list
+    AddDefaultUser("DefaultUser1", "defaultuser1@email.com");
+    AddDefaultUser("DefaultUser2", "defaultuser2@email.com");
+    // Add more default users as needed
+}
+
+private void AddDefaultUser(string username, string email)
+{
+    // Instantiate a new UserScript prefab and set details for default users
+    UserScript defaultUser = Instantiate(userPrefab);
+    defaultUser.SetUserDetails(username, email);
+    userList.Add(defaultUser);
+}
