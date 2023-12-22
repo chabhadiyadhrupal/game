@@ -1,0 +1,12 @@
+private void Start()
+{
+    // Initialize user list if needed
+    InitializeUserList();
+}
+
+private void InitializeUserList()
+{
+    // Custom logic for initializing the user list, if necessary
+    // This method can be expanded based on your specific requirements
+    // For example, loading users from a database or other external source
+}
