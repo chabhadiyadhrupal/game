@@ -1,0 +1,46 @@
+using UnityEngine;
+using UnityEngine.UI;
+using System.Collections.Generic;
+
+public class RegistrationScript : MonoBehaviour
+{
+    public InputField usernameInput;
+    public InputField emailInput;
+    public InputField passwordInput;
+    public UserScript userPrefab;  // Reference to the UserScript prefab
+
+    private List<UserScript> userList = new List<UserScript>();
+
+    private void Start()
+    {
+        // Initialize user list if needed
+    }
+
+    public void RegisterUser()
+    {
+        string username = usernameInput.text;
+        string email = emailInput.text;
+        string password = passwordInput.text;
+
+        // Validation logic here
+
+        if (IsUsernameUnique(username))
+        {
+            // Instantiate a new UserScript prefab and set details
+            UserScript newUser = Instantiate(userPrefab);
+            newUser.SetUserDetails(username, email);
+            userList.Add(newUser);
+            Debug.Log("User registered successfully!");
+        }
+        else
+        {
+            Debug.Log("Username already exists. Choose a different one.");
+        }
+    }
+
+    private bool IsUsernameUnique(string username)
+    {
+        // Check if the username already exists in the user list
+        return !userList.Exists(user => user.Username == username);
+    }
+}
