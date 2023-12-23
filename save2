@@ -1,0 +1,18 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+public class InputFieldManager : MonoBehaviour
+{
+    public InputField inputField;
+
+    // Call this method to clear and reopen the InputField
+    public void ClearAndReopenInputField()
+    {
+        // Clear the text in the InputField
+        inputField.text = "";
+
+        // Deactivate and then reactivate the InputField to reset its state
+        inputField.DeactivateInputField();
+        inputField.ActivateInputField();
+    }
+}
