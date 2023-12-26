@@ -1,0 +1,32 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+public class PasswordManager : MonoBehaviour
+{
+    public InputField oldPasswordField;
+    public InputField newPasswordField;
+
+    public Text statusText;
+
+    private string correctPassword = "yourOldPassword"; // Replace with your actual old password
+
+    public void ChangePassword()
+    {
+        string oldPassword = oldPasswordField.text;
+        string newPassword = newPasswordField.text;
+
+        if (oldPassword == correctPassword)
+        {
+            correctPassword = newPassword;
+            statusText.text = "Password changed successfully!";
+        }
+        else
+        {
+            statusText.text = "Incorrect old password. Please try again.";
+        }
+
+        // Clear input fields
+        oldPasswordField.text = "";
+        newPasswordField.text = "";
+    }
+}
