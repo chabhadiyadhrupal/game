@@ -1,0 +1,44 @@
+public class Register : MonoBehaviour
+{
+    // ... (existing code)
+
+    // Add a new TMP_InputField for old password
+    public TMP_InputField oldPasswordInput;
+
+    // ... (existing code)
+
+    public void ChangePassword()
+    {
+        string username = usernameInput.text;
+        string oldPassword = oldPasswordInput.text; // Get the old password input
+        string newPassword = passwordInput.text; // Get the new password input
+
+        if (ValidateOldPassword(username, oldPassword))
+        {
+            // Find the user in the userList and update the password
+            Users userToUpdate = userList.Find(user => user.Username == username);
+            if (userToUpdate != null)
+            {
+                userToUpdate.Password = newPassword;
+                Debug.Log("Password changed successfully!");
+            }
+            else
+            {
+                Debug.Log("User not found. Unable to change password.");
+            }
+        }
+        else
+        {
+            Debug.Log("Incorrect old password. Unable to change password.");
+        }
+    }
+
+    private bool ValidateOldPassword(string username, string oldPassword)
+    {
+        // Check if the provided old password matches the stored password for the user
+        Users user = userList.Find(u => u.Username == username);
+        return user != null && user.Password == oldPassword;
+    }
+
+    // ... (existing code)
+}
