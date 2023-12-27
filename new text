@@ -1,0 +1,21 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+public class ChangeText : MonoBehaviour
+{
+    // Reference to the Text component
+    public Text myText;
+
+    // Function to change the text
+    public void ChangeTextValue(string newText)
+    {
+        if (myText != null)
+        {
+            myText.text = newText;
+        }
+        else
+        {
+            Debug.LogError("Text component not found!");
+        }
+    }
+}
