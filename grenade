@@ -1,0 +1,25 @@
+public class PowerGrenade : MonoBehaviour {
+    // ... (existing code)
+
+    public float magneticForce = 500f;
+
+    // ... (existing code)
+
+    void Exploded () {
+        // ... (existing code)
+
+        // Attract nearby objects with magnetic force
+        Collider[] collidersToAttract = Physics.OverlapSphere(transform.position, Radius);
+        foreach (Collider nearbyObject in collidersToAttract) {
+            Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
+            if (rb != null && rb != this.GetComponent<Rigidbody>()) {
+                Vector3 direction = (transform.position - rb.transform.position).normalized;
+                float distance = Vector3.Distance(transform.position, rb.transform.position);
+                float magneticStrength = Mathf.Clamp01((Radius - distance) / Radius);
+                float appliedForce = magneticStrength * magneticForce;
+
+                rb.AddForce(direction * appliedForce);
+            }
+        }
+    }
+}
