@@ -1,0 +1,60 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PowerGrenade : MonoBehaviour {
+    public float delay = 3f;
+    public float Radius = 5f;
+    float Countdown;
+    bool HasExploded = false;
+    public float Force = 700;
+    public float magneticFieldStrength = 1000f; // Adjust the magnetic field strength as needed
+
+    // Start is called before the first frame update
+    void Start () {
+        Countdown = delay;
+    }
+
+    // Update is called once per frame
+    void Update () {
+        Countdown -= Time.deltaTime;
+        if (Countdown <= 0f && !HasExploded) {
+            Exploded ();
+            HasExploded = true;
+        }
+    }
+
+    void Exploded () {
+        // Delete nearby destructible objects
+        Collider[] collidersToDestroy = Physics.OverlapSphere(transform.position, Radius);
+        foreach (Collider nearbyObject in collidersToDestroy) {
+            Destructible dest = nearbyObject.GetComponent<Destructible>();
+            if (dest != null) {
+                dest.Destroy();
+            }
+        }
+
+        // Apply explosive force to nearby rigidbodies
+        Collider[] collidersToMove = Physics.OverlapSphere(transform.position, Radius);
+        foreach (Collider nearbyObject in collidersToMove) {
+            Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
+            if (rb != null) {
+                rb.AddExplosionForce(Force, transform.position, Radius);
+            }
+        }
+
+        // Create a magnetic field to attract nearby rigidbodies
+        Collider[] collidersToAttract = Physics.OverlapSphere(transform.position, Radius);
+        foreach (Collider nearbyObject in collidersToAttract) {
+            Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
+            if (rb != null && rb != this.GetComponent<Rigidbody>()) {
+                Vector3 direction = (transform.position - rb.transform.position).normalized;
+                float distance = Vector3.Distance(transform.position, rb.transform.position);
+                float magneticStrength = Mathf.Clamp01((Radius - distance) / Radius);
+                float appliedForce = magneticStrength * magneticFieldStrength;
+
+                rb.AddForce(direction * appliedForce);
+            }
+        }
+    }
+}
