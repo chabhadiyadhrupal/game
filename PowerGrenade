@@ -1,0 +1,47 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PowerGrenade : MonoBehaviour {
+    public float delay = 3f;
+    public float Radius = 5f;
+    float Countdown;
+    bool HasExploded = false;
+    public float Force = 700;
+
+    // Start is called before the first frame update
+    void Start () {
+        Countdown = delay;
+    }
+
+    // Update is called once per frame
+    void Update () {
+        Countdown -= Time.deltaTime;
+        if (Countdown <= 0f && !HasExploded) {
+            Exploded ();
+            HasExploded = true;
+
+        }
+
+    }
+    void Exploded () {
+        Collider[] collidertoDestroy = Physics.OverlapSphere (transform.position, Radius);
+        foreach(Collider NearByObject in collidertoDestroy) {
+            Destructible dest = NearByObject.GetComponent<Destructible> ();
+            if(dest!=null) {
+                dest.Destroy ();
+
+			}
+		}
+        Collider[] ColliderToMove = Physics.OverlapSphere (transform.position, Radius);
+			
+            foreach(Collider nearbyobject in ColliderToMove) {
+            Rigidbody rb = nearbyobject.GetComponent<Rigidbody> ();
+            if (rb != null) {
+                rb.AddExplosionForce (Force, transform.position, Radius);
+
+            }
+			}
+		
+    }
+}
