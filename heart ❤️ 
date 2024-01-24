@@ -1,0 +1,58 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+public class GameManager : MonoBehaviour
+{
+    public int maxLives = 3;
+    private int currentLives;
+
+    public Image[] heartImages;
+
+    void Start()
+    {
+        currentLives = maxLives;
+        UpdateHeartUI();
+    }
+
+    void UpdateHeartUI()
+    {
+        for (int i = 0; i < heartImages.Length; i++)
+        {
+            if (i < currentLives)
+            {
+                // Heart is filled
+                heartImages[i].enabled = true;
+            }
+            else
+            {
+                // Heart is empty
+                heartImages[i].enabled = false;
+            }
+        }
+    }
+
+    public void LoseLife()
+    {
+        if (currentLives > 0)
+        {
+            currentLives--;
+            UpdateHeartUI();
+
+            if (currentLives == 0)
+            {
+                // Game over logic here
+                Debug.Log("Game Over");
+            }
+        }
+    }
+
+    // Call this method when the player gains a life
+    public void GainLife()
+    {
+        if (currentLives < maxLives)
+        {
+            currentLives++;
+            UpdateHeartUI();
+        }
+    }
+}
