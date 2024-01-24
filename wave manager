@@ -1,0 +1,34 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+public class WaveManager : MonoBehaviour
+{
+    public int currentWave = 1;
+    public int maxWaves = 10;
+    public Text waveText;
+
+    void Start()
+    {
+        UpdateWaveUI();
+    }
+
+    void UpdateWaveUI()
+    {
+        waveText.text = "Wave " + currentWave + " / " + maxWaves;
+    }
+
+    // Call this method when a new wave starts
+    public void StartNextWave()
+    {
+        if (currentWave < maxWaves)
+        {
+            currentWave++;
+            UpdateWaveUI();
+            // Add your wave initialization logic here
+        }
+        else
+        {
+            // All waves completed, handle game end or other logic
+        }
+    }
+}
