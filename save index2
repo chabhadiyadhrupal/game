@@ -1,0 +1,34 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class GameManager : MonoBehaviour
+{
+    private int playerIndex = 0;
+
+    void Start()
+    {
+        // Load the saved player index if available
+        playerIndex = PlayerPrefs.GetInt("PlayerIndex", 0);
+    }
+
+    public void IncrementPlayerIndexAndLoadNextScene()
+    {
+        playerIndex++;
+        PlayerPrefs.SetInt("PlayerIndex", playerIndex); // Save the updated player index
+        PlayerPrefs.Save(); // Save PlayerPrefs data immediately
+        LoadNextScene();
+    }
+
+    void LoadNextScene()
+    {
+        int sceneIndexToLoad = playerIndex + 1; // Incrementing the index to load the next scene
+        if (sceneIndexToLoad < SceneManager.sceneCountInBuildSettings)
+        {
+            SceneManager.LoadScene(sceneIndexToLoad); // Load the scene with the incremented index
+        }
+        else
+        {
+            Debug.LogWarning("No more scenes available to load.");
+        }
+    }
+}
