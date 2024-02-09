@@ -1,0 +1,17 @@
+using UnityEngine;
+
+public class PlayerSpawnController : MonoBehaviour
+{
+    public Transform[] spawnPoints; // Array to hold spawn points
+
+    // Method to be called by animation event
+    public void SpawnPlayer()
+    {
+        // Choose a random spawn point
+        int randomIndex = Random.Range(0, spawnPoints.Length);
+        Transform spawnPoint = spawnPoints[randomIndex];
+
+        // Instantiate the player prefab at the chosen spawn point
+        Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
+    }
+}
