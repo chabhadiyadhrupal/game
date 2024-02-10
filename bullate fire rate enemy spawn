@@ -1,0 +1,32 @@
+using UnityEngine;
+
+public class EnemySpawner : MonoBehaviour
+{
+    public GameObject enemyPrefab;
+    public float spawnInterval = 2f;
+    public float spawnForce = 0.05f;
+    public float minSpawnDistance = 5f;
+    public float maxSpawnDistance = 10f;
+
+    private float timer;
+
+    void Update()
+    {
+        timer += Time.deltaTime;
+        if (timer >= spawnInterval)
+        {
+            timer = 0f;
+            SpawnEnemy();
+        }
+    }
+
+    void SpawnEnemy()
+    {
+        Vector3 spawnPosition = transform.position + Random.insideUnitSphere.normalized * Random.Range(minSpawnDistance, maxSpawnDistance);
+        GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+        
+        Vector3 spawnDirection = transform.forward; // Or define a specific direction
+        Rigidbody enemyRb = enemy.GetComponent<Rigidbody>();
+        enemyRb.AddForce(spawnDirection * spawnForce, ForceMode.VelocityChange);
+    }
+}
