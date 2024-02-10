@@ -1,0 +1,22 @@
+using UnityEngine;
+
+public class PlayerController : MonoBehaviour
+{
+    public float moveSpeed = 5f; // Adjust the speed as needed
+    private Rigidbody rb;
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
+    private void Update()
+    {
+        // Assuming you're using the left stick on the controller for movement
+        float moveInput = Input.GetAxisRaw("Horizontal");
+
+        // Update player position
+        Vector3 movement = new Vector3(moveInput, 0f, 0f) * moveSpeed * Time.deltaTime;
+        rb.MovePosition(rb.position + movement);
+    }
+}
