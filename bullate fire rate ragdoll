@@ -1,0 +1,36 @@
+using UnityEngine;
+
+public class RagdollController : MonoBehaviour
+{
+    public float destroyDelay = 2f;
+
+    private int collisionCount = 0;
+    private bool isRagdollActive = false;
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Bullet") && !isRagdollActive)
+        {
+            collisionCount++;
+            if (collisionCount >= 3)
+            {
+                ActivateRagdoll();
+            }
+        }
+    }
+
+    void ActivateRagdoll()
+    {
+        isRagdollActive = true;
+
+        // Enable ragdoll physics (assuming the ragdoll components are children of this object)
+        Rigidbody[] rigidbodies = GetComponentsInChildren<Rigidbody>();
+        foreach (Rigidbody rb in rigidbodies)
+        {
+            rb.isKinematic = false;
+        }
+
+        // Destroy the ragdoll after delay
+        Destroy(gameObject, destroyDelay);
+    }
+}
