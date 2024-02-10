@@ -1,0 +1,14 @@
+# Define Spawn Area
+spawn_area = Rect(0, 0, 1000, 1000)  # Example spawn area
+
+# Function to Spawn Enemies
+def spawn_enemy():
+    random_x = random.randint(spawn_area.left, spawn_area.right)
+    random_y = random.randint(spawn_area.top, spawn_area.bottom)
+    enemy = Enemy(x=random_x, y=random_y)
+    # Instantiate enemy object at random position
+
+# Spawn Multiple Enemies
+num_enemies = 10  # Example number of enemies to spawn
+for _ in range(num_enemies):
+    spawn_enemy()
