@@ -1,0 +1,19 @@
+using UnityEngine;
+
+public class EnemySpawner : MonoBehaviour
+{
+    public GameObject enemyPrefab;
+    public Transform spawnPoint1;
+    public Transform spawnPoint2;
+
+    void Start()
+    {
+        SpawnEnemiesBetweenPoints();
+    }
+
+    void SpawnEnemiesBetweenPoints()
+    {
+        Vector3 spawnPosition = Vector3.Lerp(spawnPoint1.position, spawnPoint2.position, Random.Range(0f, 1f));
+        Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+    }
+}
