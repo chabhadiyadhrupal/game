@@ -1,0 +1,27 @@
+using UnityEngine;
+
+public class GunManager : MonoBehaviour
+{
+    public GameObject bulletPrefab;
+    public Transform firePoint;
+    public float bulletForce = 20f;
+
+    void Update()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            Shoot();
+        }
+    }
+
+    void Shoot()
+    {
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        Rigidbody rb = bullet.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.AddForce(firePoint.forward * bulletForce, ForceMode.Impulse);
+        }
+        // Add any additional effects or behaviors here (e.g., sound effects, muzzle flash)
+    }
+}
