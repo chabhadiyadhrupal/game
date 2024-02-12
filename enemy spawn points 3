@@ -1,0 +1,23 @@
+using UnityEngine;
+
+public class EnemySpawner : MonoBehaviour
+{
+    public GameObject enemyPrefab;
+    public Transform spawnPoint1;
+    public Transform spawnPoint2;
+    public float distanceBetweenSpawnPoints = 10f; // Adjust as needed
+
+    void Start()
+    {
+        SpawnEnemiesBetweenPoints();
+    }
+
+    void SpawnEnemiesBetweenPoints()
+    {
+        float minX = Mathf.Min(spawnPoint1.position.x, spawnPoint2.position.x);
+        float maxX = Mathf.Max(spawnPoint1.position.x, spawnPoint2.position.x);
+        float randomX = Random.Range(minX, maxX);
+        Vector3 spawnPosition = new Vector3(randomX, spawnPoint1.position.y, spawnPoint1.position.z);
+        Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+    }
+}
