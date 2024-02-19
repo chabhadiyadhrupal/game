@@ -1,0 +1,16 @@
+using UnityEngine;
+
+public class RestrictYAxis : MonoBehaviour
+{
+    void Update()
+    {
+        // Get the current position of the player
+        Vector3 currentPosition = transform.position;
+
+        // Restrict the player's Y-axis movement
+        currentPosition.y = 0f; // Set Y position to 0 (or any other desired value)
+
+        // Update the player's position
+        transform.position = currentPosition;
+    }
+}
