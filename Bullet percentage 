@@ -1,0 +1,36 @@
+// BulletScript.cs
+using UnityEngine;
+
+public class BulletScript : MonoBehaviour
+{
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Canvas"))
+        {
+            Destroy(collision.gameObject); // Destroy the canvas
+            Destroy(gameObject); // Destroy the bullet
+
+            // Find all cubes with the "cube" tag
+            GameObject[] cubes = GameObject.FindGameObjectsWithTag("Cube");
+
+            // Randomly select a 20% area of the canvas
+            float canvasArea = collision.gameObject.GetComponent<MeshCollider>().bounds.size.x * collision.gameObject.GetComponent<MeshCollider>().bounds.size.z;
+            float twentyPercentArea = Random.Range(0.0f, canvasArea * 0.2f);
+
+            // Destroy cubes within the randomly selected 20% area
+            foreach (GameObject cube in cubes)
+            {
+                if (IsWithin20PercentOfCanvasArea(cube.transform.position, collision.gameObject.transform.position, twentyPercentArea))
+                {
+                    Destroy(cube);
+                }
+            }
+        }
+    }
+
+    private bool IsWithin20PercentOfCanvasArea(Vector3 cubePosition, Vector3 canvasPosition, float threshold)
+    {
+        float distance = Vector3.Distance(cubePosition, canvasPosition);
+        return distance <= Mathf.Sqrt(threshold / Mathf.PI);
+    }
+}
